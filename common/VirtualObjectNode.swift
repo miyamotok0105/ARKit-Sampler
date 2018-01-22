@@ -12,6 +12,7 @@ class VirtualObjectNode: SCNNode {
 
     override init() {
         super.init()
+        //Common.swiftのloadDuckでduck.scnを読み込んでる
         loadDuck()
     }
     
@@ -20,6 +21,7 @@ class VirtualObjectNode: SCNNode {
     }
 
     func react() {
+        //シーン内のオブジェクトを一斉にアニメーションさせる。
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 0.3
         SCNTransaction.completionBlock = {

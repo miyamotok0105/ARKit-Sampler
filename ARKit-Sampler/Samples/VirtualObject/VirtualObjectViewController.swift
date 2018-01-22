@@ -33,28 +33,36 @@ class VirtualObjectViewController: UIViewController, ARSCNViewDelegate {
     
     // MARK: - ARSCNViewDelegate
     
+    //updateAtTime
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         guard let frame = sceneView.session.currentFrame else {return}
         sceneView.updateLightingEnvironment(for: frame)
     }
     
+    //didAdd
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        //平面を検出したらadd
         print("\(self.classForCoder)/" + #function)
         guard let planeAnchor = anchor as? ARPlaneAnchor else {fatalError()}
         planeAnchor.addPlaneNode(on: node, color: UIColor.arBlue.withAlphaComponent(0.3))
 
+        //オブジェクトを描画
         let virtualNode = VirtualObjectNode()
         DispatchQueue.main.async(execute: {
             node.addChildNode(virtualNode)
         })
     }
     
+    //didUpdate
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        //平面を検出したらupdate
         guard let planeAnchor = anchor as? ARPlaneAnchor else {fatalError()}
         planeAnchor.updatePlaneNode(on: node)
     }
     
+    //didRemove
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
+        //
         print("\(self.classForCoder)/" + #function)
     }
 }
